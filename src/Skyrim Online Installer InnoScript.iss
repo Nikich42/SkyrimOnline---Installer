@@ -12,6 +12,7 @@
 #define OutputDirPath "..\"
 #define SkyrimSaveLocation "{userdocs}\My Games\Skyrim"
 #define SkyrimSaveBackupLocation "{userdesktop}\SkyrimDataBackup"
+#define SkyrimDir "{reg:HKLM\SOFTWARE\Bethesda Softworks\Skyrim,Installed Path}"
 
 
 [Setup]
@@ -26,7 +27,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={reg:HKLM\SOFTWARE\Bethesda Softworks\Skyrim,Installed Path}
+DefaultDirName={#SkyrimDir}
 DefaultGroupName=Skyrim Online Mod
 DirExistsWarning=no
 LicenseFile={#LicenseFilePath}
@@ -47,26 +48,27 @@ Name: custom; Description: "Custom"; Flags: iscustom
 
 [Tasks]
 ;Optional install of Server capability
-Name: LaunchServerINI; Description: "Launch server INI after install. This can be edited later by going to {app}\GameServer.ini"; Flags: unchecked
+Name: "LaunchServerINI"; Description: "Launch server INI after install. This can be edited later by going to {app}\GameServer.ini"; Flags: unchecked
 
 ;Optional Data Backup
-Name: BackupData; Description: "Backup save and config files to the desktop (Recommended) - Skyrim data must be in {#SkyrimSaveLocation}";
+Name: "BackupData"; Description: "Backup save and config files to the desktop (Recommended) - Skyrim data must be in {#SkyrimSaveLocation}"
+Name: "URLLaunch"; Description: "Allow URL launching of the game"
 
 [Components]
 ;Necessary Prerequisites
-Name: Prereqs; Description: "Prerequisites"; Types: full mod
-Name: Prereqs\DotNetInstall; Description: "Microsoft .NET 4.5"; Types: full mod
-Name: Prereqs\VSRedistInstall; Description: "Visual Studio 2012 redist"; Types: full mod
-Name: Prereqs\XNAInstall; Description: "Microsoft XNA 4.0 redist"; Types: full mod
-Name: Prereqs\SKSELaunch; Description: "Link to install SKSE"; Types: full mod
+Name: "Prereqs"; Description: "Prerequisites"; Types: full mod
+Name: "Prereqs\DotNetInstall"; Description: "Microsoft .NET 4.5"; Types: full mod
+Name: "Prereqs\VSRedistInstall"; Description: "Visual Studio 2012 redist"; Types: full mod
+Name: "Prereqs\XNAInstall"; Description: "Microsoft XNA 4.0 redist"; Types: full mod
+Name: "Prereqs\SKSELaunch"; Description: "Link to install SKSE"; Types: full mod
 
 ;Only install the mod with no server hosting capability, leaves prereqs checked by default
-Name: Mod; Description: "Mod"; Types: full mod
-Name: Mod\SkyrimModInstall; Description: "Skyrim Online Mod"; Types: full mod
+Name: "Mod"; Description: "Mod"; Types: full mod
+Name: "Mod\SkyrimModInstall"; Description: "Skyrim Online Mod"; Types: full mod
 
 ;Optional server hosting capability
-Name: AdditionalComponents; Description: "Additional Components"; Types: full
-Name: AdditionalComponents\ServerInstall; Description: "Server hosting capability"; Types: full
+Name: "AdditionalComponents"; Description: "Additional Components"; Types: full
+Name: "AdditionalComponents\ServerInstall"; Description: "Server hosting capability"; Types: full
 
 [Files]
 ;Main mod DLLs
@@ -114,3 +116,8 @@ Name: "{app}\Data\Online"
 Name: "{app}\Data\Online\UI"
 Name: "{%TEMP}\Ext"
 Name: "{app}\SkyrimServer"
+
+[Registry]
+Root: "HKCR"; Subkey: "skyrimonline"; ValueType: string; ValueName: "URL Protocol"; ValueData: "URL:skyrimonline Protocol"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
+Root: "HKCR"; Subkey: "skyrimonline\Shell\Open\Command"; ValueType: string; ValueData: """{#SkyrimDir}\skse_loader.exe"""; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
+Root: "HKCR"; Subkey: "skyrimonline\DefaultIcon"; ValueType: string; ValueData: "{#SkyrimDir}\TESV.exe"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
