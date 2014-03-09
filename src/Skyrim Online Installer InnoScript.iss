@@ -52,7 +52,7 @@ Name: "LaunchServerINI"; Description: "Launch server INI after install. This can
 
 ;Optional Data Backup
 Name: "BackupData"; Description: "Backup save and config files to the desktop (Recommended) - Skyrim data must be in {#SkyrimSaveLocation}"
-Name: "URLLaunch"; Description: "Allow URL launching of the game"
+Name: "URLLaunch"; Description: "Allow URL launching of the game. URLs containing 'skyrimonline://' will launch the game. "
 
 [Components]
 ;Necessary Prerequisites
