@@ -1,0 +1,2 @@
+#Ignore setup.exe and all exes
+*.exe

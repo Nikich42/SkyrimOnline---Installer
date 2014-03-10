@@ -119,5 +119,5 @@ Name: "{app}\SkyrimServer"
 
 [Registry]
 Root: "HKCR"; Subkey: "skyrimonline"; ValueType: string; ValueName: "URL Protocol"; ValueData: "URL:skyrimonline Protocol"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
-Root: "HKCR"; Subkey: "skyrimonline\Shell\Open\Command"; ValueType: string; ValueData: """{#SkyrimDir}\skse_loader.exe"""; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
+Root: "HKCR"; Subkey: "skyrimonline\Shell\Open\Command"; ValueType: string; ValueData: "cmd.exe /C cd ""{#SkyrimDir}"" & start skse_loader.exe"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
 Root: "HKCR"; Subkey: "skyrimonline\DefaultIcon"; ValueType: string; ValueData: "{#SkyrimDir}\TESV.exe"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: URLLaunch
